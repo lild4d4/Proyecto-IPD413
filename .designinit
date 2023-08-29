@@ -1,0 +1,17 @@
+case "$USING" in
+GF)
+  export PDK=gf180mcuC
+  export PDKPATH=$PDK_ROOT/$PDK
+  export STD_CELL_LIBRARY=gf180mcu_fd_sc_mcu7t5v0
+  ;;
+SKYB)
+  export PDK=sky130B
+  export PDKPATH=$PDK_ROOT/$PDK
+  export STD_CELL_LIBRARY=sky130_fd_sc_hd
+  ;;
+*)
+  export PDK=sky130A
+  export PDKPATH=$PDK_ROOT/$PDK
+  export STD_CELL_LIBRARY=sky130_fd_sc_hd
+  ;;
+esac
