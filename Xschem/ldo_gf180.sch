@@ -1,4 +1,4 @@
-v {xschem version=3.1.0 file_version=1.2
+v {xschem version=3.4.2 file_version=1.2
 }
 G {}
 K {}
@@ -65,7 +65,8 @@ N 830 -680 1145 -680 {
 lab=vin}
 N 1145 -680 1150 -680 {
 lab=vin}
-N 1150 -460 1240 -460 {}
+N 1150 -460 1240 -460 {
+lab=out}
 C {devices/gnd.sym} 830 -410 0 0 {name=l22 lab=GND}
 C {devices/isource.sym} 420 -340 2 0 {name=I1 value=1.5u
 }
@@ -181,7 +182,7 @@ C {devices/lab_pin.sym} 1390 -680 1 0 {name=l5 sig_type=std_logic lab=vin
 C {devices/lab_pin.sym} 1015 -500 1 0 {name=l12 sig_type=std_logic lab=op_out
 
 }
-C {LDO_Design/gfamp.sym} 810 -500 0 0 {name=X1}
+C {gfamp.sym} 810 -500 0 0 {name=X1}
 C {/foss/pdks/gf180mcuC/libs.tech/xschem/symbols/pfet_03v3.sym} 1130 -500 0 0 {name=M0
 L=0.7u
 W=1000u
