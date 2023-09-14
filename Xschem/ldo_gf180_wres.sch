@@ -19,13 +19,13 @@ lab=vin}
 N 910 -560 1000 -560 {
 lab=op_out}
 N 1140 -530 1140 -510 { lab=out}
-N 1140 -360 1140 -340 { lab=pos}
+N 1140 -280 1140 -260 { lab=pos}
 N 1140 -560 1240 -560 { lab=vin}
-N 1060 -350 1140 -350 { lab=pos}
-N 1140 -380 1140 -370 { lab=pos}
-N 1140 -370 1140 -360 { lab=pos}
-N 1140 -160 1140 -120 { lab=GND}
-N 1140 -120 1140 -110 { lab=GND}
+N 1060 -270 1140 -270 { lab=pos}
+N 1140 -300 1140 -290 { lab=pos}
+N 1140 -290 1140 -280 { lab=pos}
+N 1140 -80 1140 -40 { lab=GND}
+N 1140 -40 1140 -30 { lab=GND}
 N 1000 -560 1100 -560 { lab=op_out}
 N 1140 -660 1140 -590 {
 lab=vin}
@@ -40,8 +40,8 @@ lab=ref}
 N 1140 -510 1140 -480 {
 lab=out}
 N 1140 -420 1140 -380 {
-lab=pos}
-N 1140 -340 1140 -310 {
+lab=#net2}
+N 1140 -260 1140 -230 {
 lab=pos}
 N 180 -240 180 -220 {
 lab=GND}
@@ -65,30 +65,34 @@ N 1135 -740 1140 -740 {
 lab=vin}
 N 1140 -520 1230 -520 {
 lab=out}
-N 1140 -250 1140 -220 {
-lab=#net2}
-N 1100 -190 1120 -190 {
+N 1140 -170 1140 -140 {
+lab=GND}
+N 1100 -110 1120 -110 {
 lab=V3V3}
-N 1100 -280 1120 -280 {
+N 1100 -200 1120 -200 {
 lab=V3V3}
-N 1040 -240 1090 -240 {
+N 1040 -160 1090 -160 {
 lab=V3V3}
-N 1090 -280 1090 -240 {
+N 1090 -200 1090 -160 {
 lab=V3V3}
-N 1090 -280 1100 -280 {
+N 1090 -200 1100 -200 {
 lab=V3V3}
-N 1090 -240 1090 -190 {
+N 1090 -160 1090 -110 {
 lab=V3V3}
-N 1090 -190 1100 -190 {
+N 1090 -110 1100 -110 {
 lab=V3V3}
 N 1040 -450 1120 -450 {
 lab=V3V3}
+N 1140 -320 1140 -300 {
+lab=pos}
+N 1140 -140 1140 -70 {
+lab=GND}
 C {devices/gnd.sym} 820 -470 0 0 {name=l22 lab=GND}
 C {devices/isource.sym} 410 -400 2 0 {name=I1 value=1.5u
 }
 C {devices/gnd.sym} 410 -350 0 0 {name=l10 lab=GND}
-C {devices/lab_pin.sym} 1060 -350 1 0 {name=l25 sig_type=std_logic lab=pos}
-C {devices/gnd.sym} 1140 -110 0 0 {name=l1 lab=GND}
+C {devices/lab_pin.sym} 1060 -270 1 0 {name=l25 sig_type=std_logic lab=pos}
+C {devices/gnd.sym} 1140 -30 0 0 {name=l1 lab=GND}
 C {devices/opin.sym} 1230 -520 0 0 {name=p3 lab=out
 }
 C {devices/lab_pin.sym} 710 -590 0 0 {name=l3 sig_type=std_logic lab=pos}
@@ -108,8 +112,8 @@ value="
 .lib /home/lild4d4/pdk/gf180mcuC/libs.tech/ngspice/sm141064.ngspice cap_mim
 .lib /home/lild4d4/pdk/gf180mcuC/libs.tech/ngspice/sm141064.ngspice res_typical
 
-.param R=36k
-*R10 out 0 \{R\}
+.param R=330
+R10 out 0 \{R\}
 *IL out 0 PWL(0 0.1m 10u 0.1m 20u 10m 30u 10m)
 *CL out 0 1p
 .options savecurrents
@@ -143,12 +147,13 @@ value="
 *SUPPLY SWEEP
 .control
 save all
-dc V3 3.3 0 -0.01
+dc V3 4 0 -0.01
 plot v(out) v(ref) v(pos) v(vin)
 *wrdata /foss/designs/LDO_Design/data/data_SuplySweep_Vout.dat v(out)
 *wrdata /foss/designs/LDO_Design/data/data_SuplySweep_Vref.dat v(ref)
 *wrdata /foss/designs/LDO_Design/data/data_SuplySweep_Vin.dat v(vin)
 plot v(op_out)
+plot i(v4)
 .endc
 
 *PSRR_Analysis
@@ -183,7 +188,7 @@ C {devices/lab_pin.sym} 180 -330 1 0 {name=l8 sig_type=std_logic lab=V3V3
 }
 C {devices/vsource.sym} 180 -270 0 0 {name=V2 value=3.3}
 C {devices/gnd.sym} 1380 -530 0 0 {name=l9 lab=GND}
-C {devices/vsource.sym} 1380 -580 0 0 {name=V3 value=2}
+C {devices/vsource.sym} 1380 -580 0 0 {name=V3 value=4}
 C {devices/lab_pin.sym} 1380 -740 1 0 {name=l5 sig_type=std_logic lab=vin
 }
 C {devices/lab_pin.sym} 1005 -560 1 0 {name=l12 sig_type=std_logic lab=op_out
@@ -193,8 +198,8 @@ C {gfamp.sym} 800 -560 0 0 {name=X1}
 C {symbols/pfet_03v3.sym} 1120 -560 0 0 {name=M1
 L=0.7u
 W=100u
-nf=110
-m=1
+nf=1
+m=10
 ad="'int((nf+1)/2) * W/nf * 0.18u'"
 pd="'2*int((nf+1)/2) * (W/nf + 0.18u)'"
 as="'int((nf+2)/2) * W/nf * 0.18u'"
@@ -205,24 +210,19 @@ model=pfet_03v3
 spiceprefix=X
 }
 C {symbols/ppolyf_u.sym} 1140 -450 0 0 {name=R1
-W=0.4e-6
-L=3e-6
+W=1e-6
+L=200e-6
 model=ppolyf_u_1k
 spiceprefix=X
 m=1}
-C {symbols/ppolyf_u.sym} 1140 -280 0 0 {name=R2
-W=0.4e-6
-L=3e-6
+C {symbols/ppolyf_u.sym} 1140 -200 0 0 {name=R2
+W=1e-6
+L=114e-6
 model=ppolyf_u_1k
 spiceprefix=X
 m=1}
-C {symbols/ppolyf_u.sym} 1140 -190 0 0 {name=R3
-W=0.4e-6
-L=3e-6
-model=ppolyf_u_1k
-spiceprefix=X
-m=1}
-C {devices/lab_pin.sym} 1040 -240 1 0 {name=l13 sig_type=std_logic lab=V3V3
+C {devices/lab_pin.sym} 1040 -160 1 0 {name=l13 sig_type=std_logic lab=V3V3
 }
 C {devices/lab_pin.sym} 1040 -450 1 0 {name=l11 sig_type=std_logic lab=V3V3
 }
+C {devices/vsource.sym} 1140 -350 0 0 {name=V4 value=0}
