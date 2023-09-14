@@ -1,4 +1,4 @@
-v {xschem version=3.4.2 file_version=1.2
+v {xschem version=3.1.0 file_version=1.2 
 }
 G {}
 K {}
@@ -54,7 +54,7 @@ C {devices/lab_pin.sym} 680 -350 1 0 {name=l4 sig_type=std_logic lab=ref
 C {devices/lab_pin.sym} 720 -500 0 0 {name=l6 sig_type=std_logic lab=ref
 }
 C {devices/vsource.sym} 680 -290 0 0 {name=V1 value=1.2}
-C {devices/code.sym} 988.75 -771.875 0 0 {name=analysis
+C {devices/code_shown.sym} 1708.75 -891.875 0 0 {name=snalysis
 only_toplevel=true
 value="
 *TRANSIENT
@@ -67,56 +67,6 @@ plot v(out) v(ref) v(pos) v(vin)
 *plot i(v3)
 *plot i(v3)*v(vin)
 .endc
-
-*Stability_Analysis
-*.control
-*alter IL 0
-*alter Vs AC =0
-*alter Vt AC=1
-*ac dec 10 1 1G
-*plot vdb(out)
-*plot (180/pi)*vp(out)
-*let ph= (180/pi)*vp(out)
-*meas ac pm FIND ph WHEN vdb(out)=0
-*.endc
-
-*SUPPLY SWEEP
-.control
-save all
-dc V3 3.3 0 -0.01
-plot v(out) v(ref) v(pos) v(vin)
-*wrdata /foss/designs/LDO_Design/data/data_SuplySweep_Vout.dat v(out)
-*wrdata /foss/designs/LDO_Design/data/data_SuplySweep_Vref.dat v(ref)
-*wrdata /foss/designs/LDO_Design/data/data_SuplySweep_Vin.dat v(vin)
-*plot v(op_out)
-.endc
-
-*PSRR_Analysis
-.control
-save all
-alter V3 AC =1
-ac dec 100 1 1G
-plot vdb(out)
-let gm0=@m.xm0.m0[gm]
-let Zout=(1.5)/(gm0*v(op_out))
-let Zout2=v(out)/gm0
-*plot vdb(Zout2)
-*wrdata /foss/designs/LDO_Design/data/data_PSRR.dat vdb(out)
-.endc
-
-
-**Load_Transient
-*.control
-*alter IL 50u
-*alter R10 3600k
-*tran 0.1u 100u
-*meas TRAN V_ldo_100u FIND v(out) AT=5u
-*meas TRAN V_ldo_10m FIND v(out) AT=100u
-*let load_reg= V_ldo_100u-V_ldo_10m
-*let load_current =(-1*i(V3)-131.8e-6)
-*print load_reg
-*plot load_current v(out)-1.8
-*.endc
 "}
 C {devices/res.sym} 1060 -400 0 0 {name=R1
 value=1k
@@ -129,14 +79,14 @@ footprint=1206
 device=resistor
 m=1}
 C {devices/gnd.sym} 760 -260 0 0 {name=l9 lab=GND}
-C {devices/vsource.sym} 760 -290 0 0 {name=V3 value=2}
+C {devices/vsource.sym} 760 -290 0 0 {name=vin value=2}
 C {devices/opin.sym} 760 -370 0 0 {name=l5 sig_type=std_logic lab=vin
 }
 C {devices/lab_pin.sym} 945 -500 1 0 {name=l12 sig_type=std_logic lab=op_out
 
 }
 C {gfamp.sym} 810 -500 0 0 {name=X1}
-C {/foss/pdks/gf180mcuC/libs.tech/xschem/symbols/pfet_03v3.sym} 1040 -500 0 0 {name=M0
+C {symbols/pfet_03v3.sym} 1040 -500 0 0 {name=M0
 L=0.7u
 W=1000u
 nf=11
@@ -154,11 +104,12 @@ C {devices/ipin.sym} 720 -530 0 0 {name=p1 lab=pos}
 C {devices/opin.sym} 980 -350 2 0 {name=p2 lab=pos}
 C {devices/code.sym} 618.75 -771.875 0 0 {name=dependencies
 only_toplevel=false
+format="tcleval( @value )"
 value="
-.include /foss/pdks/gf180mcuC/libs.tech/ngspice/design.ngspice
-.lib /foss/pdks/gf180mcuC/libs.tech/ngspice/sm141064.ngspice typical
-.lib /foss/pdks/gf180mcuC/libs.tech/ngspice/sm141064.ngspice mimcap_statistical
-.lib /foss/pdks/gf180mcuC/libs.tech/ngspice/sm141064.ngspice cap_mim
+.include $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/design.ngspice
+.lib $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/sm141064.ngspice typical
+.lib $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/sm141064.ngspice mimcap_statistical
+.lib $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/sm141064.ngspice cap_mim
 
 .include /foss/designs/Xschem/ldo-parameters.spice
 
@@ -192,3 +143,63 @@ C {devices/ipin.sym} 830 -610 0 0 {name=l11 sig_type=std_logic lab=vin
 C {devices/ipin.sym} 1060 -610 0 0 {name=l15 sig_type=std_logic lab=vin
 }
 C {devices/gnd.sym} 1400 -510 0 0 {name=l7 lab=GND}
+C {devices/code_shown.sym} 2288.75 -421.875 0 0 {name=snalysis1
+only_toplevel=true
+value="
+*Stability_Analysis
+*.control
+*alter IL 0
+*alter Vs AC =0
+*alter Vt AC=1
+*ac dec 10 1 1G
+*plot vdb(out)
+*plot (180/pi)*vp(out)
+*let ph= (180/pi)*vp(out)
+*meas ac pm FIND ph WHEN vdb(out)=0
+*.endc
+"}
+C {devices/code_shown.sym} 2258.75 -731.875 0 0 {name="SUPPLY SWEEP"
+only_toplevel=true
+value="
+*.control
+*save all
+*dc V3 3.3 0 -0.01
+*plot v(out) v(ref) v(pos) v(vin)
+ *wrdata /foss/designs/LDO_Design/data/data_SuplySweep_Vout.dat v(out)
+ *wrdata /foss/designs/LDO_Design/data/data_SuplySweep_Vref.dat v(ref)
+ *wrdata /foss/designs/LDO_Design/data/data_SuplySweep_Vin.dat v(vin)
+*plot v(op_out)
+*.endc
+"}
+C {devices/code_shown.sym} 1718.75 -291.875 0 0 {name=snalysis3
+only_toplevel=true
+value="
+**Load_Transient
+*.control
+*alter IL 50u
+*alter R10 3600k
+*tran 0.1u 100u
+*meas TRAN V_ldo_100u FIND v(out) AT=5u
+*meas TRAN V_ldo_10m FIND v(out) AT=100u
+*let load_reg= V_ldo_100u-V_ldo_10m
+*let load_current =(-1*i(V3)-131.8e-6)
+*print load_reg
+*plot load_current v(out)-1.8
+*.endc
+"}
+C {devices/code_shown.sym} 1718.75 -601.875 0 0 {name=snalysis4
+only_toplevel=true
+value="
+*PSRR_Analysis
+*.control
+*save all
+*alter V3 AC =1
+*ac dec 100 1 1G
+*plot vdb(out)
+*let gm0=@m.xm0.m0[gm]
+*let Zout=(1.5)/(gm0*v(op_out))
+*let Zout2=v(out)/gm0
+*plot vdb(Zout2)
+*wrdata /foss/designs/LDO_Design/data/data_PSRR.dat vdb(out)
+*.endc
+"}

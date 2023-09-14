@@ -1,17 +1,51 @@
 case "$USING" in
 GF)
+  echo Using gf180
   export PDK=gf180mcuC
   export PDKPATH=$PDK_ROOT/$PDK
   export STD_CELL_LIBRARY=gf180mcu_fd_sc_mcu7t5v0
   ;;
 SKYB)
+  echo Using gf180
   export PDK=sky130B
   export PDKPATH=$PDK_ROOT/$PDK
   export STD_CELL_LIBRARY=sky130_fd_sc_hd
   ;;
 *)
+  echo Using gf180
   export PDK=sky130A
   export PDKPATH=$PDK_ROOT/$PDK
   export STD_CELL_LIBRARY=sky130_fd_sc_hd
   ;;
 esac
+
+c_res='\[\033[00m\]'      # Reset
+c_bla='\[\033[01;30m\]'   # Black
+c_red='\[\033[01;31m\]'   # Red
+c_gre='\[\033[01;32m\]'   # Green
+c_yel='\[\033[01;33m\]'   # Yellow
+c_blu='\[\033[01;34m\]'   # Blue
+c_pur='\[\033[01;35m\]'   # Purple
+c_cya='\[\033[01;36m\]'   # Cyan
+c_whi='\[\033[01;37m\]'   # White
+
+git config --global --add safe.directory /foss/designs
+
+alias ls="ls -A --color=always -X -F"
+alias vim="vim -u /foss/designs/.vimrc"
+alias config="vim $DESIGNS/.designinit"
+alias xschem="xschem --rcfile /foss/designs/xschemrc"
+
+function git_branch {
+    branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+    if [ "$branch" != "" ]; then
+      echo "($branch)"
+    fi
+}
+
+PS1='${debian_chroot:+($debian_chroot)}'${c_pur}'\w\n'${c_gre}'\$ '${c_res}
+PS1='${debian_chroot:+($debian_chroot)}'${c_pur}'\w '${git_branch}'\n'${c_gre}'\$ '${c_res}
+
+# thunar | file manager
+#export XSCHEM_USER_LIBRARY_PATH="/foss/pdks/gf180mcuC/libs.tech/xschem/symbols/"
+
