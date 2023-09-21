@@ -1,3 +1,5 @@
+#!/bin/bash
+
 case "$USING" in
 GF)
   echo Using gf180
@@ -29,12 +31,12 @@ c_pur='\[\033[01;35m\]'   # Purple
 c_cya='\[\033[01;36m\]'   # Cyan
 c_whi='\[\033[01;37m\]'   # White
 
-git config --global --add safe.directory /foss/designs
+git config --global --add safe.directory $DESIGNS
 
 alias ls="ls -A --color=always -X -F"
-alias vim="vim -u /foss/designs/.vimrc"
+alias vim="vim -u $DESIGNS/.vimrc"
 alias config="vim $DESIGNS/.designinit"
-alias xschem="xschem --rcfile /foss/designs/xschemrc"
+alias xschem="xschem --rcfile $DESIGNS/xschemrc"
 
 function git_branch {
     branch=$(git symbolic-ref --short HEAD 2>/dev/null)

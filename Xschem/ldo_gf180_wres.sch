@@ -102,16 +102,65 @@ C {devices/lab_pin.sym} 90 -330 1 0 {name=l4 sig_type=std_logic lab=ref
 C {devices/lab_pin.sym} 710 -560 0 0 {name=l6 sig_type=std_logic lab=ref
 }
 C {devices/vsource.sym} 90 -270 0 0 {name=V1 value=1.2}
-C {devices/code_shown.sym} -711.25 -1161.875 0 0 {name=NGSPICE
+C {devices/code.sym} 318.75 -791.875 0 0 {name=MODELS
 only_toplevel=true
+place=header
+format="tcleval( @value )"
 value="
+.include $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/design.ngspice
+.lib $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/sm141064.ngspice typical
+.lib $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/sm141064.ngspice mimcap_statistical
+.lib $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/sm141064.ngspice cap_mim
+.lib $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/sm141064.ngspice res_typical
+"}
+C {devices/gnd.sym} 180 -220 0 0 {name=l7 lab=GND}
+C {devices/lab_pin.sym} 180 -330 1 0 {name=l8 sig_type=std_logic lab=V3V3
+}
+C {devices/vsource.sym} 180 -270 0 0 {name=V2 value=3.3}
+C {devices/gnd.sym} 1380 -530 0 0 {name=l9 lab=GND}
+C {devices/vsource.sym} 1380 -580 0 0 {name=V3 value=4}
+C {devices/lab_pin.sym} 1380 -740 1 0 {name=l5 sig_type=std_logic lab=vin
+}
+C {devices/lab_pin.sym} 1005 -560 1 0 {name=l12 sig_type=std_logic lab=op_out
 
-.include /home/lild4d4/pdk/gf180mcuC/libs.tech/ngspice/design.ngspice
-.lib /home/lild4d4/pdk/gf180mcuC/libs.tech/ngspice/sm141064.ngspice typical
-.lib /home/lild4d4/pdk/gf180mcuC/libs.tech/ngspice/sm141064.ngspice mimcap_statistical
-.lib /home/lild4d4/pdk/gf180mcuC/libs.tech/ngspice/sm141064.ngspice cap_mim
-.lib /home/lild4d4/pdk/gf180mcuC/libs.tech/ngspice/sm141064.ngspice res_typical
-
+}
+C {gfamp.sym} 800 -560 0 0 {name=X1}
+C {symbols/pfet_03v3.sym} 1120 -560 0 0 {name=M1
+L=0.7u
+W=100u
+nf=1
+m=10
+ad="'int((nf+1)/2) * W/nf * 0.18u'"
+pd="'2*int((nf+1)/2) * (W/nf + 0.18u)'"
+as="'int((nf+2)/2) * W/nf * 0.18u'"
+ps="'2*int((nf+2)/2) * (W/nf + 0.18u)'"
+nrd="'0.18u / W'" nrs="'0.18u / W'"
+sa=0 sb=0 sd=0
+model=pfet_03v3
+spiceprefix=X
+}
+C {symbols/ppolyf_u.sym} 1140 -450 0 0 {name=R1
+W=1e-6
+L=200e-6
+model=ppolyf_u_1k
+spiceprefix=X
+m=1}
+C {symbols/ppolyf_u.sym} 1140 -200 0 0 {name=R2
+W=1e-6
+L=114e-6
+model=ppolyf_u_1k
+spiceprefix=X
+m=1}
+C {devices/lab_pin.sym} 1040 -160 1 0 {name=l13 sig_type=std_logic lab=V3V3
+}
+C {devices/lab_pin.sym} 1040 -450 1 0 {name=l11 sig_type=std_logic lab=V3V3
+}
+C {devices/vsource.sym} 1140 -350 0 0 {name=V4 value=0}
+C {devices/code_shown.sym} -541.25 -981.875 0 0 {name=NGSPICE
+only_toplevel=true
+format="tcleval( @value )"
+spice_ignore=false
+value="
 .param R=330
 R10 out 0 \{R\}
 *IL out 0 PWL(0 0.1m 10u 0.1m 20u 10m 30u 10m)
@@ -183,46 +232,3 @@ plot vdb(Zout2)
 *plot load_current v(out)-1.8
 *.endc
 "}
-C {devices/gnd.sym} 180 -220 0 0 {name=l7 lab=GND}
-C {devices/lab_pin.sym} 180 -330 1 0 {name=l8 sig_type=std_logic lab=V3V3
-}
-C {devices/vsource.sym} 180 -270 0 0 {name=V2 value=3.3}
-C {devices/gnd.sym} 1380 -530 0 0 {name=l9 lab=GND}
-C {devices/vsource.sym} 1380 -580 0 0 {name=V3 value=4}
-C {devices/lab_pin.sym} 1380 -740 1 0 {name=l5 sig_type=std_logic lab=vin
-}
-C {devices/lab_pin.sym} 1005 -560 1 0 {name=l12 sig_type=std_logic lab=op_out
-
-}
-C {gfamp.sym} 800 -560 0 0 {name=X1}
-C {symbols/pfet_03v3.sym} 1120 -560 0 0 {name=M1
-L=0.7u
-W=100u
-nf=1
-m=10
-ad="'int((nf+1)/2) * W/nf * 0.18u'"
-pd="'2*int((nf+1)/2) * (W/nf + 0.18u)'"
-as="'int((nf+2)/2) * W/nf * 0.18u'"
-ps="'2*int((nf+2)/2) * (W/nf + 0.18u)'"
-nrd="'0.18u / W'" nrs="'0.18u / W'"
-sa=0 sb=0 sd=0
-model=pfet_03v3
-spiceprefix=X
-}
-C {symbols/ppolyf_u.sym} 1140 -450 0 0 {name=R1
-W=1e-6
-L=200e-6
-model=ppolyf_u_1k
-spiceprefix=X
-m=1}
-C {symbols/ppolyf_u.sym} 1140 -200 0 0 {name=R2
-W=1e-6
-L=114e-6
-model=ppolyf_u_1k
-spiceprefix=X
-m=1}
-C {devices/lab_pin.sym} 1040 -160 1 0 {name=l13 sig_type=std_logic lab=V3V3
-}
-C {devices/lab_pin.sym} 1040 -450 1 0 {name=l11 sig_type=std_logic lab=V3V3
-}
-C {devices/vsource.sym} 1140 -350 0 0 {name=V4 value=0}

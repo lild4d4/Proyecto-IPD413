@@ -3,3 +3,7 @@
 .ipynb*
 .jupyter*
 __pycache__
+klayout/*
+.bash_history
+.viminfo
+.xschem

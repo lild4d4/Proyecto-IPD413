@@ -121,13 +121,13 @@ C {devices/opin.sym} 1100 -320 0 0 {name=p12 lab=out}
 C {devices/lab_pin.sym} 1070 -320 1 0 {name=l2 sig_type=std_logic lab=out}
 C {devices/lab_pin.sym} 470 -170 0 0 {name=l3 sig_type=std_logic lab=vb}
 C {devices/lab_pin.sym} 930 -240 0 0 {name=l4 sig_type=std_logic lab=vb}
-C {/foss/pdks/gf180mcuC/libs.tech/xschem/symbols/cap_mim_2p0fF.sym} 890 -320 3 0 {name=C2
+C {symbols/cap_mim_2p0fF.sym} 890 -320 3 0 {name=C2
 W=50e-6
 L=20e-6
 model=cap_mim_1f5fF
 spiceprefix=X
 m=1}
-C {/foss/pdks/gf180mcuC/libs.tech/xschem/symbols/nfet_03v3.sym} 350 -320 0 0 {name=M1
+C {symbols/nfet_03v3.sym} 350 -320 0 0 {name=M1
 L=0.3u
 W=10u
 nf=1
@@ -141,7 +141,7 @@ sa=0 sb=0 sd=0
 model=nfet_03v3
 spiceprefix=X
 }
-C {/foss/pdks/gf180mcuC/libs.tech/xschem/symbols/pfet_03v3.sym} 390 -460 0 1 {name=M3
+C {symbols/pfet_03v3.sym} 390 -460 0 1 {name=M3
 L=0.8u
 W=9u
 nf=1
@@ -155,7 +155,7 @@ sa=0 sb=0 sd=0
 model=pfet_03v3
 spiceprefix=X
 }
-C {/foss/pdks/gf180mcuC/libs.tech/xschem/symbols/nfet_03v3.sym} 710 -320 0 1 {name=M2
+C {symbols/nfet_03v3.sym} 710 -320 0 1 {name=M2
 L=0.3u
 W=10u
 nf=1
@@ -169,7 +169,7 @@ sa=0 sb=0 sd=0
 model=nfet_03v3
 spiceprefix=X
 }
-C {/foss/pdks/gf180mcuC/libs.tech/xschem/symbols/pfet_03v3.sym} 670 -460 0 0 {name=M4
+C {symbols/pfet_03v3.sym} 670 -460 0 0 {name=M4
 L=0.8u
 W=9u
 nf=1
@@ -183,7 +183,7 @@ sa=0 sb=0 sd=0
 model=pfet_03v3
 spiceprefix=X
 }
-C {/foss/pdks/gf180mcuC/libs.tech/xschem/symbols/nfet_03v3.sym} 490 -170 0 0 {name=M7
+C {symbols/nfet_03v3.sym} 490 -170 0 0 {name=M7
 L=1u
 W=16u
 nf=1
@@ -197,7 +197,7 @@ sa=0 sb=0 sd=0
 model=nfet_03v3
 spiceprefix=X
 }
-C {/foss/pdks/gf180mcuC/libs.tech/xschem/symbols/nfet_03v3.sym} 220 -170 0 0 {name=M8
+C {symbols/nfet_03v3.sym} 220 -170 0 0 {name=M8
 L=0.7u
 W=1.66u
 nf=1
@@ -211,7 +211,7 @@ sa=0 sb=0 sd=0
 model=nfet_03v3
 spiceprefix=X
 }
-C {/foss/pdks/gf180mcuC/libs.tech/xschem/symbols/pfet_03v3.sym} 950 -400 0 0 {name=M5
+C {symbols/pfet_03v3.sym} 950 -400 0 0 {name=M5
 L=0.4u
 W=60u
 nf=1
@@ -225,7 +225,7 @@ sa=0 sb=0 sd=0
 model=pfet_03v3
 spiceprefix=X
 }
-C {/foss/pdks/gf180mcuC/libs.tech/xschem/symbols/nfet_03v3.sym} 950 -240 0 0 {name=M6
+C {symbols/nfet_03v3.sym} 950 -240 0 0 {name=M6
 L=0.5u
 W=60u
 nf=1
