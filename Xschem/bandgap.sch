@@ -211,7 +211,7 @@ sa=0 sb=0 sd=0
 model=pfet_03v3
 spiceprefix=X
 }
-C {/home/lild4d4/Proyecto-IPD413/Xschem/gfamp.sym} 370 -480 3 0 {name=X1}
+C {gfamp.sym} 370 -480 3 0 {name=X1}
 C {symbols/pnp_10p00x10p00.sym} 190 -200 0 1 {name=Q1
 model=pnp_10p00x10p00
 spiceprefix=X
@@ -242,18 +242,9 @@ C {devices/lab_pin.sym} 150 -500 0 0 {name=l11 sig_type=std_logic lab=VDD
 }
 C {devices/lab_pin.sym} 530 -500 0 0 {name=l12 sig_type=std_logic lab=VDD
 }
-C {devices/code_shown.sym} -890 -1010 0 0 {name=NGSPICE
+C {devices/code_shown.sym} -710 -770 0 0 {name=NGSPICE
 only_toplevel=true
 value="
-
-.include /home/lild4d4/pdk/gf180mcuC/libs.tech/ngspice/design.ngspice
-.lib /home/lild4d4/pdk/gf180mcuC/libs.tech/ngspice/sm141064.ngspice typical
-.lib /home/lild4d4/pdk/gf180mcuC/libs.tech/ngspice/sm141064.ngspice mimcap_statistical
-.lib /home/lild4d4/pdk/gf180mcuC/libs.tech/ngspice/sm141064.ngspice cap_mim
-.lib /home/lild4d4/pdk/gf180mcuC/libs.tech/ngspice/sm141064.ngspice res_typical
-.lib /home/lild4d4/pdk/gf180mcuC/libs.tech/ngspice/sm141064.ngspice bjt_typical
-.lib /home/lild4d4/pdk/gf180mcuC/libs.tech/ngspice/sm141064.ngspice moscap_typical
-
 *TRANSIENT
 *.control
 *save all
@@ -326,3 +317,18 @@ L=10e-6
 model=ppolyf_u_1k
 spiceprefix=X
 m=9}
+C {devices/code.sym} -110 -570 0 0 {name=MODELS
+only_toplevel=true
+place=header
+format="tcleval( @value )"
+value="
+
+.include $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/design.ngspice
+.lib $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/sm141064.ngspice typical
+.lib $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/sm141064.ngspice mimcap_statistical
+.lib $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/sm141064.ngspice cap_mim
+.lib $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/sm141064.ngspice res_typical
+.lib $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/sm141064.ngspice bjt_typical
+.lib $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/sm141064.ngspice moscap_typical
+
+"}
