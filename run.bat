@@ -1,9 +1,7 @@
 @echo off
 setlocal
 
-SET DOCKER_USER=akilesalreadytaken
-SET DOCKER_IMAGE=analog-tools
-SET DOCKER_TAG=0.4
+SET IMAGE=akilesalreadytaken/analog-tools:latest
 SET CONTAINER_NAME=chipathon-tools
 
 SET CALL=call
@@ -32,9 +30,11 @@ SET CALL=call
     IF NOT DEFINED DESIGNS         SET DESIGNS=%CD%
     CALL :NORMALIZEPATH %DESIGNS%
 
+    IF NOT DEFINED PDK             SET PDK=gf180mcuC
+
     IF NOT DEFINED DOCKER_USER     SET DOCKER_USER=akilesalreadytaken
-    IF NOT DEFINED DOCKER_IMAGE    SET DOCKER_IMAGE=ic-tools
-    IF NOT DEFINED DOCKER_TAG      SET DOCKER_TAG=0.2
+    IF NOT DEFINED DOCKER_IMAGE    SET DOCKER_IMAGE=analog-tools
+    IF NOT DEFINED DOCKER_TAG      SET DOCKER_TAG=latest
 
     IF NOT DEFINED CONTAINER_USER  SET CONTAINER_USER=1000
     IF NOT DEFINED CONTAINER_GROUP SET CONTAINER_GROUP=1000
@@ -42,9 +42,18 @@ SET CALL=call
     IF NOT DEFINED CONTAINER_NAME  SET CONTAINER_NAME=analog-tools
 
     IF NOT DEFINED JUPYTER_PORT    SET JUPYTER_PORT=8888
+    IF NOT DEFINED VNC_PORT        SET VNC_PORT=8444
 
-    :: Validate variables
-    :::::::::::::::::::::
+    :: Get parameters from WSL
+    ::::::::::::::::::::::::::
+    SET WSL_GET_DISPLAY=wsl --exec bash --norc -c "echo $DISPLAY"
+    FOR /F "USEBACKQ" %%i IN (`%WSL_GET_DISPLAY%`) DO ( SET "DISPLAY=%%i" )
+
+    SET WSL_GET_WAYLAND_DISPLAY=wsl --exec bash --norc -c "echo $WAYLAND_DISPLAY"
+    FOR /F "USEBACKQ" %%i IN (`%WSL_GET_WAYLAND_DISPLAY%`) DO ( SET "WAYLAND_DISPLAY=%%i" )
+
+    :: Validate parameters
+    ::::::::::::::::::::::
     IF %CONTAINER_USER% NEQ 0 IF %CONTAINER_USER% LSS 1000 (
         echo WARNING: Selected User ID %CONTAINER_USER% is below 1000. This ID might interfere with User-IDs inside the container and cause undefined behaviour!
     )
@@ -52,16 +61,8 @@ SET CALL=call
         echo WARNING: Selected Group ID %CONTAINER_GROUP% is below 1000. This ID might interfere with Group-IDs inside the container and cause undefined behaviour!
     )
 
-    :: Get variables from WSL
-    :::::::::::::::::::::::::
-    SET WSL_GET_DISPLAY=wsl --exec bash --norc -c "echo $DISPLAY"
-    FOR /F "USEBACKQ" %%i IN (`%WSL_GET_DISPLAY%`) DO ( SET "DISPLAY=%%i" )
-
-    SET WSL_GET_WAYLAND_DISPLAY=wsl --exec bash --norc -c "echo $WAYLAND_DISPLAY"
-    FOR /F "USEBACKQ" %%i IN (`%WSL_GET_WAYLAND_DISPLAY%`) DO ( SET "WAYLAND_DISPLAY=%%i" )
-
-    :: Validate container existence, reuse
-    ::::::::::::::::::::::::::::::::::::::
+    :: Attach to existing container
+    :::::::::::::::::::::::::::::::
     docker container inspect %CONTAINER_NAME% 2>&1 | find "Status" | find /i "running"
     IF NOT ERRORLEVEL 1 (
         ECHO Container %CONTAINER_NAME% is running!
@@ -86,24 +87,27 @@ SET CALL=call
     %CALL% wsl --update
 
     SET PARAMS=%PARAMS% -d
-    :: SET PARAMS=%PARAMS% --rm
     SET PARAMS=%PARAMS% --user %CONTAINER_USER%:%CONTAINER_GROUP%
     SET PARAMS=%PARAMS% --name %CONTAINER_NAME%
     SET PARAMS=%PARAMS% --security-opt seccomp=unconfined
-    SET PARAMS=%PARAMS% -p "%JUPYTER_PORT%":8888
+    SET PARAMS=%PARAMS% -p %JUPYTER_PORT%:8888
+    SET PARAMS=%PARAMS% -p %VNC_PORT%:8444
     SET PARAMS=%PARAMS% -v "%DESIGNS%":/home/designer/shared
     SET PARAMS=%PARAMS% -v \\wsl.localhost\Ubuntu\mnt\wslg:/tmp
     SET PARAMS=%PARAMS% -e DESIGNS=/home/designer/shared
     SET PARAMS=%PARAMS% -e DISPLAY=%DISPLAY%
     SET PARAMS=%PARAMS% -e WAYLAND_DISPLAY=%WAYLAND_DISPLAY%
     SET PARAMS=%PARAMS% -e XDG_RUNTIME_DIR=/mnt/wslg
+    SET PARAMS=%PARAMS% -e PDK=%PDK%
 
-    SET IMAGE=%DOCKER_USER%/%DOCKER_IMAGE%
-    IF DEFINED DOCKER_TAG  SET IMAGE=%IMAGE%:%DOCKER_TAG%
+    IF NOT DEFINED IMAGE (
+        SET IMAGE=%DOCKER_USER%/%DOCKER_IMAGE%
+        IF DEFINED DOCKER_TAG  SET IMAGE=%IMAGE%:%DOCKER_TAG%
+    )
 
-    SET COMMAND=jupyter-lab --no-browser
-    SET COMMAND=vncserver -select-de xfce
-    SET COMMAND=sleep infinity
+    @REM SET COMMAND=jupyter-lab --no-browser
+    @REM SET COMMAND=startserver... ?
+    @REM SET COMMAND=sleep infinity
 
     @echo on
     %CALL% docker run %PARAMS% %IMAGE% %COMMAND%
