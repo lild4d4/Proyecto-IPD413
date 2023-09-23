@@ -5,44 +5,32 @@ K {}
 V {}
 S {}
 E {}
-N 210 -590 280 -590 {
-lab=#net1}
 N 170 -660 170 -620 {
-lab=VDD}
-N 170 -660 320 -660 {
 lab=VDD}
 N 550 -660 550 -620 {
 lab=VDD}
 N 550 -560 550 -530 {
-lab=#net2}
+lab=#net1}
 N 170 -560 170 -530 {
 lab=out}
-N 510 -660 550 -660 {
-lab=VDD}
-N 280 -590 320 -590 {
-lab=#net1}
-N 320 -660 510 -660 {
-lab=VDD}
-N 320 -590 510 -590 {
-lab=#net1}
 N 170 -470 170 -360 {
-lab=#net3}
+lab=#net2}
 N 170 -360 340 -360 {
-lab=#net3}
+lab=#net2}
 N 340 -390 340 -360 {
-lab=#net3}
+lab=#net2}
 N 370 -390 370 -360 {
-lab=#net4}
-N 370 -360 550 -360 {
-lab=#net4}
-N 550 -470 550 -360 {
-lab=#net4}
-N 170 -360 170 -320 {
 lab=#net3}
+N 370 -360 550 -360 {
+lab=#net3}
+N 550 -470 550 -360 {
+lab=#net3}
+N 170 -360 170 -320 {
+lab=#net2}
 N 170 -260 170 -230 {
 lab=vbe}
 N 550 -360 550 -230 {
-lab=#net4}
+lab=#net3}
 N 210 -200 510 -200 {
 lab=VSS}
 N 170 -170 170 -140 {
@@ -57,22 +45,6 @@ N 370 -700 370 -660 {
 lab=VDD}
 N 360 -140 360 -100 {
 lab=VSS}
-N 760 -330 760 -310 {
-lab=GND}
-N 860 -330 860 -310 {
-lab=GND}
-N 760 -410 760 -390 {
-lab=VDD}
-N 860 -410 860 -390 {
-lab=VSS}
-N 490 -420 490 -400 {
-lab=GND}
-N 440 -480 490 -480 {
-lab=#net5}
-N 440 -480 440 -390 {
-lab=#net5}
-N 400 -390 440 -390 {
-lab=#net5}
 N 280 -500 300 -500 {
 lab=VDD}
 N 440 -500 460 -500 {
@@ -177,12 +149,20 @@ N -770 -140 -690 -140 {
 lab=VSS}
 N -770 -250 -630 -250 {
 lab=vbe}
-N 150 -370 150 -360 {
-lab=#net3}
-N 150 -360 170 -360 {
-lab=#net3}
 N 90 -550 170 -550 {
 lab=out}
+N 280 -660 280 -500 {
+lab=VDD}
+N 210 -590 370 -590 {
+lab=#net4}
+N 370 -590 510 -590 {
+lab=#net4}
+N 170 -660 550 -660 {
+lab=VDD}
+N 400 -390 400 -340 {
+lab=VSS}
+N 460 -500 460 -140 {
+lab=VSS}
 C {symbols/pfet_03v3.sym} 530 -590 0 0 {name=M1
 L=2u
 W=3u
@@ -220,54 +200,16 @@ C {symbols/pnp_10p00x10p00.sym} 530 -200 0 0 {name=Q2
 model=pnp_10p00x10p00
 spiceprefix=X
 m=1}
-C {devices/lab_pin.sym} 370 -700 0 0 {name=l1 sig_type=std_logic lab=VDD
+C {devices/iopin.sym} 370 -700 2 0 {name=p1 sig_type=std_logic lab=VDD
 }
-C {devices/lab_pin.sym} 360 -100 0 0 {name=l2 sig_type=std_logic lab=VSS}
-C {devices/vsource.sym} 760 -360 0 0 {name=V1 value=3}
-C {devices/gnd.sym} 760 -310 0 0 {name=l3 lab=GND}
-C {devices/vsource.sym} 860 -360 0 0 {name=V2 value=0}
-C {devices/gnd.sym} 860 -310 0 0 {name=l4 lab=GND}
-C {devices/lab_pin.sym} 760 -410 0 0 {name=l5 sig_type=std_logic lab=VDD
-}
-C {devices/lab_pin.sym} 860 -410 0 0 {name=l6 sig_type=std_logic lab=VSS}
-C {devices/isource.sym} 490 -450 2 0 {name=I1 value=1.5u
-}
-C {devices/gnd.sym} 490 -400 0 0 {name=l10 lab=GND}
-C {devices/lab_pin.sym} 280 -500 0 0 {name=l7 sig_type=std_logic lab=VDD
-}
-C {devices/lab_pin.sym} 460 -500 2 0 {name=l8 sig_type=std_logic lab=VSS}
+C {devices/iopin.sym} 360 -100 0 0 {name=p2 sig_type=std_logic lab=VSS}
 C {devices/lab_pin.sym} 150 -290 0 0 {name=l9 sig_type=std_logic lab=VDD
 }
 C {devices/lab_pin.sym} 150 -500 0 0 {name=l11 sig_type=std_logic lab=VDD
 }
 C {devices/lab_pin.sym} 530 -500 0 0 {name=l12 sig_type=std_logic lab=VDD
 }
-C {devices/code_shown.sym} -710 -770 0 0 {name=NGSPICE
-only_toplevel=true
-value="
-*TRANSIENT
-*.control
-*save all
-*tran 1ns 2us
-*plot v(out)
-*plot v(op_out)
-*plot v(out)
-*plot i(v3)
-*plot i(v3)*v(vin)
-*.endc
-
-*SUPPLY SWEEP
-.control
-save all
-dc V1 3.3 0 -0.01
-plot v(out) VDD
-plot v(vbe) v(out)-v(vbe)
-*wrdata /foss/designs/LDO_Design/data/data_SuplySweep_Vout.dat v(out)
-*wrdata /foss/designs/LDO_Design/data/data_SuplySweep_Vref.dat v(ref)
-*wrdata /foss/designs/LDO_Design/data/data_SuplySweep_Vin.dat v(vin)
-.endc
-"}
-C {devices/lab_pin.sym} 90 -550 2 1 {name=l13 sig_type=std_logic lab=out
+C {devices/iopin.sym} 90 -550 0 1 {name=p13 sig_type=std_logic lab=out
 }
 C {symbols/pnp_10p00x10p00.sym} -70 -200 0 0 {name=Q3
 model=pnp_10p00x10p00
@@ -322,7 +264,6 @@ only_toplevel=true
 place=header
 format="tcleval( @value )"
 value="
-
 .include $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/design.ngspice
 .lib $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/sm141064.ngspice typical
 .lib $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/sm141064.ngspice mimcap_statistical
@@ -330,5 +271,5 @@ value="
 .lib $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/sm141064.ngspice res_typical
 .lib $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/sm141064.ngspice bjt_typical
 .lib $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/sm141064.ngspice moscap_typical
-
 "}
+C {devices/iopin.sym} 400 -340 1 0 {name=p3 sig_type=std_logic lab=CUR}

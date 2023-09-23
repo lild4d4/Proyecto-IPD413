@@ -1,4 +1,4 @@
-v {xschem version=3.4.2 file_version=1.2
+v {xschem version=3.1.0 file_version=1.2 
 }
 G {}
 K {}
@@ -39,12 +39,13 @@ N 170 -760 170 -740 {
 lab=GND}
 C {devices/code_shown.sym} -1581.25 -1231.875 0 0 {name=NGSPICE
 only_toplevel=true
+format="tcleval( @value )"
 value="
 
-.include /foss/pdks/gf180mcuC/libs.tech/ngspice/design.ngspice
-.lib /foss/pdks/gf180mcuC/libs.tech/ngspice/sm141064.ngspice typical
-.lib /foss/pdks/gf180mcuC/libs.tech/ngspice/sm141064.ngspice mimcap_statistical
-.lib /foss/pdks/gf180mcuC/libs.tech/ngspice/sm141064.ngspice cap_mim
+.include $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/design.ngspice
+.lib $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/sm141064.ngspice typical
+.lib $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/sm141064.ngspice mimcap_statistical
+.lib $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/sm141064.ngspice cap_mim
 
 .options savecurrents
 
