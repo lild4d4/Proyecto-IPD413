@@ -5,6 +5,8 @@ K {}
 V {}
 S {}
 E {}
+T {DEPRECATED.
+Use ldo.sch and ldo-test.sch instead} -120 -1130 0 0 2 2 {}
 N 820 -490 820 -470 { lab=GND}
 N 440 -530 710 -530 {
 lab=#net1}
