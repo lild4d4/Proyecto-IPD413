@@ -37,66 +37,21 @@ N 170 -850 170 -820 {
 lab=OUT}
 N 170 -760 170 -740 {
 lab=GND}
-C {devices/code.sym} -811.25 -1071.875 0 0 {name=dependencies
+C {devices/code_shown.sym} -1581.25 -1231.875 0 0 {name=NGSPICE
 only_toplevel=true
-place=header
 format="tcleval( @value )"
 value="
+
 .include $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/design.ngspice
 .lib $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/sm141064.ngspice typical
 .lib $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/sm141064.ngspice mimcap_statistical
 .lib $env(PDK_ROOT)/$env(PDK)/libs.tech/ngspice/sm141064.ngspice cap_mim
 
+.options savecurrents
+
+*.lib /foss/pdks/sky130A/libs.tech/ngspice/sky130.lib.spice tt
 .param CM_VOLTAGE = 0.9
 .param OUTPUT_VOLTAGE = 1
-
-.options savecurrents
-"}
-C {devices/vsource.sym} -660 -700 0 0 {name=V1 value=1.8}
-C {devices/gnd.sym} -660 -650 0 0 {name=l3 lab=GND}
-C {devices/lab_pin.sym} -660 -750 0 0 {name=l4 sig_type=std_logic lab=V3V3
-}
-C {devices/vsource.sym} -670 -450 0 0 {name=V2 value=\{CM_VOLTAGE\}}
-C {devices/gnd.sym} -670 -400 0 0 {name=l16 lab=GND}
-C {devices/vsource.sym} -670 -530 0 0 {name=V3 value="AC 1"}
-C {devices/lab_pin.sym} -650 -580 2 0 {name=l18 sig_type=std_logic lab=INP
-}
-C {devices/lab_pin.sym} -540 -880 0 0 {name=l19 sig_type=std_logic lab=INP
-}
-C {devices/gnd.sym} -430 -760 0 0 {name=l22 lab=GND}
-C {devices/lab_pin.sym} 190 -850 2 0 {name=l23 sig_type=std_logic lab=OUT
-}
-C {devices/res.sym} -80 -700 0 0 {name=R1
-value=10E6
-footprint=1206
-device=resistor
-m=1}
-C {devices/vsource.sym} -80 -780 0 0 {name=V4 value=\{OUTPUT_VOLTAGE-CM_VOLTAGE\}}
-C {devices/capa.sym} -80 -600 0 0 {name=C3
-m=1
-value=1
-footprint=1206
-device="ceramic capacitor"}
-C {devices/gnd.sym} -80 -550 0 0 {name=l6 lab=GND}
-C {devices/lab_pin.sym} -60 -650 0 1 {name=l7 sig_type=std_logic lab=INM
-}
-C {devices/isource.sym} -840 -690 2 0 {name=I1 value=1.5u
-}
-C {devices/gnd.sym} -840 -640 0 0 {name=l10 lab=GND}
-C {devices/lab_pin.sym} -540 -850 0 0 {name=l2 sig_type=std_logic lab=INM
-}
-C {devices/lab_pin.sym} -430 -970 0 0 {name=l5 sig_type=std_logic lab=V3V3
-}
-C {./gfamp.sym} -450 -850 0 0 {name=X1}
-C {devices/capa.sym} 170 -790 0 0 {name=C1
-m=1
-value=2.5p
-footprint=1206
-device="ceramic capacitor"}
-C {devices/gnd.sym} 170 -740 0 0 {name=l1 lab=GND}
-C {devices/code.sym} -331.25 -1061.875 0 0 {name=analysis
-only_toplevel=true
-value="
 .control
 save all
 ac dec 200 10 1000Meg
@@ -177,3 +132,45 @@ print gm5/(gds5+gds6)
 
 .endc
 "}
+C {devices/vsource.sym} -660 -700 0 0 {name=V1 value=1.8}
+C {devices/gnd.sym} -660 -650 0 0 {name=l3 lab=GND}
+C {devices/lab_pin.sym} -660 -750 0 0 {name=l4 sig_type=std_logic lab=V3V3
+}
+C {devices/vsource.sym} -670 -450 0 0 {name=V2 value=\{CM_VOLTAGE\}}
+C {devices/gnd.sym} -670 -400 0 0 {name=l16 lab=GND}
+C {devices/vsource.sym} -670 -530 0 0 {name=V3 value="AC 1"}
+C {devices/lab_pin.sym} -650 -580 2 0 {name=l18 sig_type=std_logic lab=INP
+}
+C {devices/lab_pin.sym} -540 -880 0 0 {name=l19 sig_type=std_logic lab=INP
+}
+C {devices/gnd.sym} -430 -760 0 0 {name=l22 lab=GND}
+C {devices/lab_pin.sym} 190 -850 2 0 {name=l23 sig_type=std_logic lab=OUT
+}
+C {devices/res.sym} -80 -700 0 0 {name=R1
+value=10E6
+footprint=1206
+device=resistor
+m=1}
+C {devices/vsource.sym} -80 -780 0 0 {name=V4 value=\{OUTPUT_VOLTAGE-CM_VOLTAGE\}}
+C {devices/capa.sym} -80 -600 0 0 {name=C3
+m=1
+value=1
+footprint=1206
+device="ceramic capacitor"}
+C {devices/gnd.sym} -80 -550 0 0 {name=l6 lab=GND}
+C {devices/lab_pin.sym} -60 -650 0 1 {name=l7 sig_type=std_logic lab=INM
+}
+C {devices/isource.sym} -840 -690 2 0 {name=I1 value=1.5u
+}
+C {devices/gnd.sym} -840 -640 0 0 {name=l10 lab=GND}
+C {devices/lab_pin.sym} -540 -850 0 0 {name=l2 sig_type=std_logic lab=INM
+}
+C {devices/lab_pin.sym} -430 -970 0 0 {name=l5 sig_type=std_logic lab=V3V3
+}
+C {./ota-ldo.sym} -450 -850 0 0 {name=X1}
+C {devices/capa.sym} 170 -790 0 0 {name=C1
+m=1
+value=2.5p
+footprint=1206
+device="ceramic capacitor"}
+C {devices/gnd.sym} 170 -740 0 0 {name=l1 lab=GND}

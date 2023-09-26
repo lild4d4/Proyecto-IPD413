@@ -182,7 +182,7 @@ C {devices/lab_pin.sym} 1390 -680 1 0 {name=l5 sig_type=std_logic lab=vin
 C {devices/lab_pin.sym} 1015 -500 1 0 {name=l12 sig_type=std_logic lab=op_out
 
 }
-C {gfamp.sym} 810 -500 0 0 {name=X1}
+C {ota-ldo.sym} 810 -500 0 0 {name=X1}
 C {/foss/pdks/gf180mcuC/libs.tech/xschem/symbols/pfet_03v3.sym} 1130 -500 0 0 {name=M0
 L=0.7u
 W=1000u
