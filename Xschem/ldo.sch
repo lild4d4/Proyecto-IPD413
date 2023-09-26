@@ -49,18 +49,19 @@ N 580 -590 710 -590 {
 lab=pos}
 N 980 -760 980 -740 {
 lab=vdd}
-N 1080 -740 1080 -200 {
-lab=vdd}
 N 1080 -450 1120 -450 {
-lab=vdd}
+lab=vss}
 N 1080 -200 1120 -200 {
-lab=vdd}
+lab=vss}
 N 820 -140 1140 -140 {
 lab=vss}
 N 820 -490 820 -140 {
 lab=vss}
 N 980 -140 980 -120 {
 lab=vss}
+N 1080 -450 1080 -200 {
+lab=vss}
+N 1080 -200 1080 -140 {}
 C {devices/iopin.sym} 710 -560 2 0 {name=p6 sig_type=std_logic lab=ref
 }
 C {devices/code.sym} 318.75 -791.875 0 0 {name=MODELS
